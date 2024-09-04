@@ -36,7 +36,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
 
 /*
  * Project Notes:
- * 
+ * 		TEST
  *		-Current Tasks:
  *			1) Refactor the whole project such that using interfaces allows/disallows methods to inherit via CrpMaterial super's constructor. 
  *			2) Dynamically Create Creation Catalysts depending on the Enum: ONE->SEVEN such that the enum dictates all of the assets generated in relation to the mockups 
