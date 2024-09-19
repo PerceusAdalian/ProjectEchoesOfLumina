@@ -3,6 +3,7 @@ package com.perceus.eol;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.perceus.eol.branch.events.MaterialInteractEvent;
 import com.perceus.eol.branch.events.PlayerJoinEventHandler;
 import com.perceus.eol.branch.events.PlayerQuitEventHandler;
 import com.perceus.eol.branch.events.PluginDamageToEntityEvent;
@@ -17,12 +18,16 @@ public class ProjectEchoesOfLumina extends JavaPlugin
 	public void onEnable() 
 	{		
 		instance = this;
+		this.getCommand("adhere").setExecutor(new EchoesOfLuminaCommand());;
 		
-		System.out.println("Echoes of Lumina Enabled");
 		Bukkit.getPluginManager().registerEvents(new MobGenerator(), this);
 		Bukkit.getPluginManager().registerEvents(new PluginDamageToEntityEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventHandler(), this);
+		Bukkit.getPluginManager().registerEvents(new MaterialInteractEvent(), this);
+		
+		CrpMaterials.init();
+		System.out.println("Echoes of Lumina Enabled");
 //		Bukkit.getPluginManager().registerEvents(new NaturalDamageToEntityEvent(), this);
 //		this.getCommand("test").setExecutor(new EolCommand());
 	}

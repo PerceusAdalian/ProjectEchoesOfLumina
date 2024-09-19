@@ -2,3 +2,7 @@ main: com.perceus.eol.ProjectEchoesOfLumina
 name: EchoesOfLumina
 version: 0.1.0
 api-version: 1.21
+commands:
+    adhere:
+        description: main server branch command prompt
+        usage: /adhere
