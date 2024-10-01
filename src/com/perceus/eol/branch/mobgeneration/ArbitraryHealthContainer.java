@@ -112,31 +112,31 @@ public class ArbitraryHealthContainer
     public static void setBaseMaxArmor(Entity entity, double armor) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobBaseArmorKey, PersistentDataType.DOUBLE, armor);
+        data.set(mobBaseArmorKey, PersistentDataType.INTEGER, (int)armor);
         setArmor(entity, armor);
 	}
 	
-	public static Double getBaseMaxArmor(Entity entity) 
+	public static Integer getBaseMaxArmor(Entity entity) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-		return data.get(mobBaseArmorKey, PersistentDataType.DOUBLE);
+		return data.get(mobBaseArmorKey, PersistentDataType.INTEGER);
 	}
 	
 	public static void setBaseMinArmor(Entity entity, double armor) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobBaseMinimumArmorKey, PersistentDataType.DOUBLE, armor);
+        data.set(mobBaseMinimumArmorKey, PersistentDataType.INTEGER, (int)armor);
 	}
 	
-	public static Double getBaseMinArmor(Entity entity) 
+	public static Integer getBaseMinArmor(Entity entity) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-		return data.get(mobBaseMinimumArmorKey, PersistentDataType.DOUBLE);
+		return data.get(mobBaseMinimumArmorKey, PersistentDataType.INTEGER);
 	}
 	
 	public static void setMaxArmor(Entity entity) 
 	{
-		Double baseArmor = getBaseMaxArmor(entity);
+		Integer baseArmor = getBaseMaxArmor(entity);
 		if (baseArmor != null) 
 		{
 			setArmor(entity, baseArmor);
@@ -146,22 +146,22 @@ public class ArbitraryHealthContainer
 	public static void setArmor(Entity entity, double value) 
     {
         PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobArmorKey, PersistentDataType.DOUBLE, value);
+        data.set(mobArmorKey, PersistentDataType.INTEGER, (int)value);
     }
 
-    public static Double getArmor(Entity entity) 
+    public static Integer getArmor(Entity entity) 
     {
         PersistentDataContainer data = entity.getPersistentDataContainer();
-        return data.get(mobArmorKey, PersistentDataType.DOUBLE);
+        return data.get(mobArmorKey, PersistentDataType.INTEGER);
     }
 
     public static void damageArmor(Entity entity, double damage) 
     {
-        Double currentArmor = getArmor(entity);
+        Double currentArmor = (double) getArmor(entity);
         if (currentArmor != null) 
         {
             double newArmor = currentArmor - damage;
-            Double minArmor = getBaseMinArmor(entity);
+            Double minArmor = (double) getBaseMinArmor(entity);
             if (minArmor != null && newArmor < minArmor) 
             {
                 setArmor(entity, minArmor);
@@ -175,10 +175,10 @@ public class ArbitraryHealthContainer
 
     public static void healArmor(Entity entity, double healAmount) 
     {
-        Double currentArmor = getArmor(entity);
+        Double currentArmor = (double) getArmor(entity);
         if (currentArmor != null) 
         {
-            Double maxArmor = getBaseMaxArmor(entity);
+            Double maxArmor = (double) getBaseMaxArmor(entity);
             if (maxArmor != null) 
             {
                 double newArmor = currentArmor + healAmount;
@@ -191,7 +191,7 @@ public class ArbitraryHealthContainer
     
     public static boolean isBroken(Entity entity) 
     {
-    	Double currentArmor = getArmor(entity);
+    	Double currentArmor = (double) getArmor(entity);
     	return currentArmor != null && currentArmor <= 0;
     }
     

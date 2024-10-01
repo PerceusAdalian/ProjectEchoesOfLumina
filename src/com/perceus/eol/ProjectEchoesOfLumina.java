@@ -13,11 +13,14 @@ import com.perceus.eol.branch.mobgeneration.MobGenerator;
 public class ProjectEchoesOfLumina extends JavaPlugin
 {
 	public static ProjectEchoesOfLumina instance; 
+	public static boolean debug;
 	
 	@Override
 	public void onEnable() 
 	{		
 		instance = this;
+		debug = false;
+		
 		this.getCommand("adhere").setExecutor(new EchoesOfLuminaCommand());;
 		
 		Bukkit.getPluginManager().registerEvents(new MobGenerator(), this);

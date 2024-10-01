@@ -21,6 +21,7 @@ public class CreationCatalyst_1 extends CreationCatalystObject
 	@Override
 	public void Cast(PlayerInteractEvent event) 
 	{
+		
 		PrintUtils.PrintError("This worky :D");
 		if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) 
 		{
