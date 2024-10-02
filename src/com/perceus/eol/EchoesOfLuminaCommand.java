@@ -19,7 +19,7 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 
 	public EchoesOfLuminaCommand() 
 	{
-		Bukkit.getPluginCommand("adhere").setTabCompleter(this);
+		Bukkit.getPluginCommand("eol").setTabCompleter(this);
 	}
 
 	@Override
@@ -34,27 +34,40 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 		
 		if (!sender.isOp()) 
 		{
-			player.sendMessage(PrintUtils.ColorParser("&c[!] You do not have permission to use this command."));
+			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Permission Denied"));
 			return false;
 		}
 		
 		if (args.length == 0) 
 		{
-			player.sendMessage(PrintUtils.ColorParser("&c[!] This branch is either not implemented, or more arguments are required."));
+			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Invalid Argument(s)"));
 			return false;
 		}
 		
-		if (CrpMaterials.materialRegistry.containsKey(args[0])) 
+		if (args[0].equals("adhere") && CrpMaterials.materialRegistry.containsKey(args[1])) 
 		{
-			CrpMaterialObject material = CrpMaterials.materialRegistry.get(args[0]);
+			CrpMaterialObject material = CrpMaterials.materialRegistry.get(args[1]);
 			ItemStack stack = material.generate();
 			player.getInventory().addItem(stack);
 			return true;
 		}
 		
+		if (args[0].equals("debug"))
+		{
+			if (ProjectEchoesOfLumina.debug == false) 
+			{
+				ProjectEchoesOfLumina.debug = true;
+				player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &a&lON"));
+				return true;
+			}
+			ProjectEchoesOfLumina.debug = false;
+			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &c&lOFF"));
+			return true;
+		}
+		
 		else 
 		{
-			player.sendMessage(PrintUtils.ColorParser("&c[!] Invalid Item Name"));
+			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Invalid Argument(s)"));
 		}
 		
 		return false;
@@ -63,6 +76,24 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) 
 	{
-		return new ArrayList<>(CrpMaterials.materialRegistry.keySet());
+		return switch(args.length) 
+		{
+			case 0 -> List.of("eol");
+			case 1 -> List.of("adhere","debug");
+			case 2 -> 
+			{
+				yield switch(args[0])
+				{
+					case "adhere" -> new ArrayList<>(CrpMaterials.materialRegistry.keySet());
+					case "debug" -> List.of();
+					default -> List.of();
+				};
+			}
+			
+			default -> List.of();
+		};
+
+				
+				//new ArrayList<>(CrpMaterials.materialRegistry.keySet());
 	}
 }

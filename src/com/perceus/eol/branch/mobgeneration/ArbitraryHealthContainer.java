@@ -32,10 +32,10 @@ public class ArbitraryHealthContainer
 		return data.get(mobBaseHealthKey, PersistentDataType.DOUBLE);
 	}
 	
-	public static void setBaseMinHealth(Entity entity, double health) 
+	public static void setBaseMinHealth(Entity entity) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobBaseMinimumHealthKey, PersistentDataType.DOUBLE,  health);
+        data.set(mobBaseMinimumHealthKey, PersistentDataType.DOUBLE,0d);
 	}
 	
 	public static Double getBaseMinHealth(Entity entity) 
@@ -68,42 +68,37 @@ public class ArbitraryHealthContainer
     public static void damage(Entity entity, double damage) 
     {
         Double currentHealth = getHealth(entity);
-        if (currentHealth != null) 
+        double newHealth = currentHealth - damage;
+        Double minHealth = getBaseMinHealth(entity);
+        if (!(newHealth <= minHealth)) 
         {
-            double newHealth = currentHealth - damage;
-            Double minHealth = getBaseMinHealth(entity);
-            if (minHealth != null && newHealth < minHealth) 
-            {
-            	setHealth(entity, minHealth);
-            } 
-            else 
-            {
-                setHealth(entity, Math.max(newHealth, 0));
-            }
+        	setHealth(entity, newHealth);
+        } 
+        else 
+        {
+        	setHealth(entity, minHealth);
         }
     }
 
     public static void damagePercent(Entity entity, double percent) 
     {
     	Double maxHealth = getBaseMaxHealth(entity);
-    	if (maxHealth != null) 
-    	{
-            double damage = (percent / 100.0) * maxHealth;
-            damage(entity, damage);
-        }
+        double damage = (percent / 100.0) * maxHealth;
+        damage(entity, damage);
     }
 
     public static void heal(Entity entity, double healAmount) 
     {
         Double currentHealth = getHealth(entity);
-        if (currentHealth != null) 
+    	double newHealth = currentHealth + healAmount;
+        Double maxHealth = getBaseMaxHealth(entity);
+        if (!(newHealth >= maxHealth)) 
         {
-            Double maxHealth = getBaseMaxHealth(entity);
-            if (maxHealth != null) 
-            {
-                double newHealth = currentHealth + healAmount;
-                setHealth(entity, Math.min(newHealth, maxHealth));
-            }
+        	setHealth(entity, newHealth);
+        } 
+        else 
+        {
+        	setHealth(entity, maxHealth);
         }
     }
     
@@ -122,10 +117,10 @@ public class ArbitraryHealthContainer
 		return data.get(mobBaseArmorKey, PersistentDataType.INTEGER);
 	}
 	
-	public static void setBaseMinArmor(Entity entity, double armor) 
+	public static void setBaseMinArmor(Entity entity) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobBaseMinimumArmorKey, PersistentDataType.INTEGER, (int)armor);
+        data.set(mobBaseMinimumArmorKey, PersistentDataType.INTEGER, 0);
 	}
 	
 	public static Integer getBaseMinArmor(Entity entity) 
@@ -158,32 +153,30 @@ public class ArbitraryHealthContainer
     public static void damageArmor(Entity entity, double damage) 
     {
         Double currentArmor = (double) getArmor(entity);
-        if (currentArmor != null) 
+        Double minArmor = (double) getBaseMinArmor(entity);
+        double newArmor = currentArmor - damage;
+        if (!(newArmor <= minArmor)) 
         {
-            double newArmor = currentArmor - damage;
-            Double minArmor = (double) getBaseMinArmor(entity);
-            if (minArmor != null && newArmor < minArmor) 
-            {
-                setArmor(entity, minArmor);
-            } 
-            else 
-            {
-                setArmor(entity, Math.max(newArmor, 0));
-            }
+            setArmor(entity, newArmor);
+        } 
+        else 
+        {
+            setArmor(entity, minArmor);
         }
     }
 
     public static void healArmor(Entity entity, double healAmount) 
     {
-        Double currentArmor = (double) getArmor(entity);
-        if (currentArmor != null) 
+    	Double currentArmor = (double) getArmor(entity);
+        Double maxArmor = (double) getBaseMaxArmor(entity);
+        double newArmor = currentArmor + healAmount;
+        if (!(newArmor >= maxArmor)) 
         {
-            Double maxArmor = (double) getBaseMaxArmor(entity);
-            if (maxArmor != null) 
-            {
-                double newArmor = currentArmor + healAmount;
-                setArmor(entity, Math.min(newArmor, maxArmor));
-            }
+        	setArmor(entity, newArmor);
+        } 
+        else 
+        {
+        	setArmor(entity, maxArmor);
         }
     }
 	
@@ -192,12 +185,12 @@ public class ArbitraryHealthContainer
     public static boolean isBroken(Entity entity) 
     {
     	Double currentArmor = (double) getArmor(entity);
-    	return currentArmor != null && currentArmor <= 0;
+    	return (currentArmor != null && currentArmor <= 0);
     }
     
-    public static boolean isDead(Entity entity, double damage, double currenthealth) 
+    public static boolean isDead(Entity entity, double currenthealth, double damage) 
     {
-		return currenthealth - damage < 0;
+		return (currenthealth - damage <= getBaseMinHealth(entity));
     }
     
 }

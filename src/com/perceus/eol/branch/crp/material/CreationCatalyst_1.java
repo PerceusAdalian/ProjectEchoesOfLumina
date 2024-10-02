@@ -6,7 +6,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.perceus.eol.branch.crp.enums.Rarity;
-import com.perceus.eol.utils.PrintUtils;
 
 public class CreationCatalyst_1 extends CreationCatalystObject
 {
@@ -21,12 +20,11 @@ public class CreationCatalyst_1 extends CreationCatalystObject
 	@Override
 	public void Cast(PlayerInteractEvent event) 
 	{
-		
-		PrintUtils.PrintError("This worky :D");
 		if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) 
 		{
 			return;
 		}
+		event.setCancelled(true);
 		
 		event.getPlayer().sendMessage("Yo shit work bb <3~!");
 		return;

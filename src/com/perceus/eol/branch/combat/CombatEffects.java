@@ -1,4 +1,4 @@
-package com.perceus.eol.branch.crp;
+package com.perceus.eol.branch.combat;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;

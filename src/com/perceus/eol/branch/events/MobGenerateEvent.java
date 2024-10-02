@@ -1,4 +1,4 @@
-package com.perceus.eol.branch.mobgeneration;
+package com.perceus.eol.branch.events;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attributable;
@@ -9,8 +9,12 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
+import com.perceus.eol.branch.mobgeneration.ArbitraryHealthContainer;
+import com.perceus.eol.branch.mobgeneration.CommonEnemyLevelTable;
+import com.perceus.eol.branch.mobgeneration.HealthBar;
+import com.perceus.eol.utils.PrintUtils;
 
-public class MobGenerator implements Listener
+public class MobGenerateEvent implements Listener
 {
 	public static final NamespacedKey mobKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "mob_key");
 	
@@ -26,9 +30,9 @@ public class MobGenerator implements Listener
 		double healthModifier = (0.15d * level) + 1;
 		
 		ArbitraryHealthContainer.setBaseMaxHealth(event.getEntity(), (((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthModifier));
-		ArbitraryHealthContainer.setBaseMinHealth(event.getEntity(), 0);
+		ArbitraryHealthContainer.setBaseMinHealth(event.getEntity());
 		ArbitraryHealthContainer.setBaseMaxArmor(event.getEntity(), ((((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthModifier)/0.5d));
-		ArbitraryHealthContainer.setBaseMinArmor(event.getEntity(), 0);
+		ArbitraryHealthContainer.setBaseMinArmor(event.getEntity());
 		
 		String name = event.getEntityType().toString().toLowerCase();
 		String[] split = name.split("_");
@@ -50,5 +54,12 @@ public class MobGenerator implements Listener
 		HealthBar.createBossBar(event.getEntity(), false);
 		//This block^ gets their name and organizes it to look pretty on their name plate, and sets their name plate.
 		event.getEntity().getPersistentDataContainer().set(mobKey, PersistentDataType.INTEGER, level);
+		
+		if (ProjectEchoesOfLumina.debug == true) 
+		{
+			String string = event.getEntity().getCustomName().toString();
+			PrintUtils.Print("&e{{&cEOL_DEBUG&e}} &fMobGenerateEvent: &f" + string + " || &aGenerated Successfully");
+		}
+		
 	}
 }
