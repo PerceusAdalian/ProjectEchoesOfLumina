@@ -27,11 +27,11 @@ public class MobGenerateEvent implements Listener
 		}
 		
 		int level = CommonEnemyLevelTable.getLevel(event.getEntity().getLocation().getBlock().getBiome());
-		double healthModifier = (0.15d * level) + 1;
+		double healthModifier = (0.15d * level) + 1.0;
 		
 		ArbitraryHealthContainer.setBaseMaxHealth(event.getEntity(), (((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthModifier));
 		ArbitraryHealthContainer.setBaseMinHealth(event.getEntity());
-		ArbitraryHealthContainer.setBaseMaxArmor(event.getEntity(), ((((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthModifier)/0.5d));
+		ArbitraryHealthContainer.setBaseMaxArmor(event.getEntity(), ((((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthModifier)*0.5));
 		ArbitraryHealthContainer.setBaseMinArmor(event.getEntity());
 		
 		String name = event.getEntityType().toString().toLowerCase();
@@ -48,7 +48,7 @@ public class MobGenerateEvent implements Listener
 		
 		name = name.substring(0, name.length() - 1);
 		
-		event.getEntity().setCustomName("{Lvl: " + level + "} " + name);
+		event.getEntity().setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: " + level + "&e} &f" + name));
 		event.getEntity().setCustomNameVisible(true);
 		
 		HealthBar.createBossBar(event.getEntity(), false);

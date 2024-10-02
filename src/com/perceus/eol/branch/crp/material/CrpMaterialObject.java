@@ -146,12 +146,7 @@ public abstract class CrpMaterialObject
 		{
 			itemDescription.add(PrintUtils.ColorParser("&r&fUsed in the CRP Process. \n"));
 		}
-		
-//		for (String line : description) 
-//		{
-//			PrintUtils.ColorParser("&r&f" + itemDescription.add(PrintUtils.ColorParser(line)) + "\n");
-//		}
-		
+
 		meta.setLore(itemDescription);
 		
 		stack.setItemMeta(meta);

@@ -35,7 +35,7 @@ public class ArbitraryHealthContainer
 	public static void setBaseMinHealth(Entity entity) 
 	{
 		PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(mobBaseMinimumHealthKey, PersistentDataType.DOUBLE,0d);
+        data.set(mobBaseMinimumHealthKey, PersistentDataType.DOUBLE,0.0);
 	}
 	
 	public static Double getBaseMinHealth(Entity entity) 
@@ -69,15 +69,7 @@ public class ArbitraryHealthContainer
     {
         Double currentHealth = getHealth(entity);
         double newHealth = currentHealth - damage;
-        Double minHealth = getBaseMinHealth(entity);
-        if (!(newHealth <= minHealth)) 
-        {
-        	setHealth(entity, newHealth);
-        } 
-        else 
-        {
-        	setHealth(entity, minHealth);
-        }
+        setHealth(entity, newHealth);
     }
 
     public static void damagePercent(Entity entity, double percent) 
@@ -153,16 +145,8 @@ public class ArbitraryHealthContainer
     public static void damageArmor(Entity entity, double damage) 
     {
         Double currentArmor = (double) getArmor(entity);
-        Double minArmor = (double) getBaseMinArmor(entity);
         double newArmor = currentArmor - damage;
-        if (!(newArmor <= minArmor)) 
-        {
-            setArmor(entity, newArmor);
-        } 
-        else 
-        {
-            setArmor(entity, minArmor);
-        }
+        setArmor(entity, newArmor);
     }
 
     public static void healArmor(Entity entity, double healAmount) 
@@ -184,13 +168,22 @@ public class ArbitraryHealthContainer
     
     public static boolean isBroken(Entity entity) 
     {
-    	Double currentArmor = (double) getArmor(entity);
-    	return (currentArmor != null && currentArmor <= 0);
+    	return (double) getArmor(entity) <= getBaseMinArmor(entity);
     }
     
-    public static boolean isDead(Entity entity, double currenthealth, double damage) 
+    public static boolean isDead(Entity entity) 
     {
-		return (currenthealth - damage <= getBaseMinHealth(entity));
+		return getHealth(entity) <= getBaseMinHealth(entity);
+    }
+    
+    public static boolean isOverkilled(Entity entity) 
+    {
+    	return getHealth(entity) < getBaseMinHealth(entity);
+    }
+    
+    public static double getOverkillDamage(Entity entity) 
+    {
+    	return getHealth(entity);
     }
     
 }
