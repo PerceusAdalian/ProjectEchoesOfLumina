@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
 import com.perceus.eol.branch.combat.CombatEffects;
@@ -34,11 +33,8 @@ public class EolDamageEvent implements Listener
 			return;
 		}
 		
-		//checking if we can legally heal it to offset it's "natural" health
-		if (event.getEntity() instanceof Damageable) 
-		{			
-			((Damageable) event.getEntity()).setHealth(((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());			
-		}
+		//Restores mob health to original max; nullifying the minecraft damage.
+		((Damageable) event.getEntity()).setHealth(((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 
 		//runs a preliminary check for if the mob was already guard broken before this damage calculation. If so, then we deal an additional 10% damage relative to their max health.
 		if (ArbitraryHealthContainer.isBroken(event.getEntity())) 
@@ -55,19 +51,11 @@ public class EolDamageEvent implements Listener
 		{
 			CombatEffects.breakEffect(event.getEntity());
 			
-			new BukkitRunnable() 
+			mapOfTimers.put(event.getEntity().getUniqueId(), new AdvancedTimerRunnable(() ->
 			{
-				@Override
-				public void run() 
-				{
-					if (event.getEntity().isDead()) 
-					{
-						this.cancel();
-					}
-					ArbitraryHealthContainer.setArmor(event.getEntity(), ArbitraryHealthContainer.getBaseMaxArmor(event.getEntity()));
-					HealthBar.updateBossBar(event.getEntity(), false); 
-				}
-			}.runTaskLater(ProjectEchoesOfLumina.instance, 400);
+				ArbitraryHealthContainer.setArmor(event.getEntity(), ArbitraryHealthContainer.getBaseMaxArmor(event.getEntity()));
+				mapOfTimers.remove(event.getEntity().getUniqueId());
+			}, 600));
 		}
 		
 		//if the damager was a player, update the hud so that it shows the health and stats of the mob(s) hit

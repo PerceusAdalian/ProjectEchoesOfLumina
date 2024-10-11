@@ -140,17 +140,26 @@ public abstract class CrpMaterialObject
 		itemDescription.add(PrintUtils.ColorParser("&r&f&nUsage&r&f: \n"));
 		if (this.isCatalyst()) 
 		{
-			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the CRP Menu. \n"));			
+			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the CRP Menu. \n"));	
 		}
 		else 
 		{
 			itemDescription.add(PrintUtils.ColorParser("&r&fUsed in the CRP Process. \n"));
 		}
 
+		itemDescription.add("\n");
+		
+		for (String line : description) 
+		{
+			itemDescription.add(PrintUtils.ColorParser("&r&7&o" + line) +"\n");			
+		}
+		
+		
 		meta.setLore(itemDescription);
 		
 		stack.setItemMeta(meta);
 		 
 		return stack;
 	}
+
 }

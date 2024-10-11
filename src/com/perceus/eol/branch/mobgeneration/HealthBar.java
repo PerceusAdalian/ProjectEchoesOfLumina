@@ -27,7 +27,7 @@ public class HealthBar
 		
 		if (ArbitraryHealthContainer.isBroken(entity)) 
 		{
-			bossBarTitle = PrintUtils.ColorParser("&f" + entity.getCustomName() + " &6AP&f: &7(&f" + "&k0&r&e{&c&lBreak!&r&e}&f&k0&r"+ "&7)");
+			bossBarTitle = PrintUtils.ColorParser("&f" + entity.getCustomName() + " &6AP&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
 		}
 		else 
 		{

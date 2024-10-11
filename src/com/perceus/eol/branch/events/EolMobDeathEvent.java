@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
+import com.perceus.eol.branch.mobgeneration.AbstractEolMobObject;
 import com.perceus.eol.utils.PrintUtils;
 
 public class EolMobDeathEvent implements Listener
@@ -13,7 +14,7 @@ public class EolMobDeathEvent implements Listener
 	public void onDeath(EntityDeathEvent event) 
 	{
 		
-		if (!event.getEntity().getPersistentDataContainer().has(MobGenerateEvent.mobKey))
+		if (!event.getEntity().getPersistentDataContainer().has(MobGenerateEvent.mobKey) || !event.getEntity().getPersistentDataContainer().has(AbstractEolMobObject.uniqueEolMobKey))
 		{
 			return;
 		}
