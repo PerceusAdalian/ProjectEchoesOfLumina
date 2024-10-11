@@ -9,7 +9,7 @@ import com.perceus.eol.branch.material.creationcatalysts.CreationCatalyst_3;
 
 public class CrpMaterialRegistry
 {
-	public static Map<String, CrpMaterialObject> materialRegistry = new HashMap<>();
+	public static Map<String, AbstractCrpMaterialObject> materialRegistry = new HashMap<>();
 	
 	public static void init() 
 	{

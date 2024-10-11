@@ -13,11 +13,12 @@ import com.perceus.eol.ProjectEchoesOfLumina;
 import com.perceus.eol.branch.crp.enums.Rarity;
 import com.perceus.eol.utils.PrintUtils;
 
-public abstract class CrpMaterialObject
+public abstract class AbstractCrpMaterialObject
 {
 	public static final NamespacedKey materialKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "crp_material");
 	public static final NamespacedKey idKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "material_id");
 	public static final NamespacedKey rarityKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "rarity");
+	public static final NamespacedKey catalystKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "catalyst");
 	private String name;
 	private String internalName;
 	private String[] description;
@@ -26,7 +27,7 @@ public abstract class CrpMaterialObject
 	private boolean enchantedEffect = false;
 	private boolean isCatalyst = false;
 	
-	public CrpMaterialObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
+	public AbstractCrpMaterialObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
 	{
 		this.name = name;
 		this.internalName = internalName;
@@ -140,6 +141,7 @@ public abstract class CrpMaterialObject
 		itemDescription.add(PrintUtils.ColorParser("&r&f&nUsage&r&f: \n"));
 		if (this.isCatalyst()) 
 		{
+			meta.getPersistentDataContainer().set(catalystKey, PersistentDataType.BOOLEAN, isCatalyst());
 			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the CRP Menu. \n"));	
 		}
 		else 

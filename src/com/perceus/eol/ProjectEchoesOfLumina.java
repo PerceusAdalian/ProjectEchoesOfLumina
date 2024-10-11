@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.perceus.eol.branch.crp.material.CrpMaterialRegistry;
+import com.perceus.eol.branch.events.CreationCatalystInteractEvent;
 import com.perceus.eol.branch.events.EolDamageEvent;
 import com.perceus.eol.branch.events.EolMobDeathEvent;
 import com.perceus.eol.branch.events.EolPlayerJoinEvent;
@@ -30,6 +31,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
 		Bukkit.getPluginManager().registerEvents(new EolMobDeathEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new EolPlayerJoinEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new EolPlayerQuitEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new CreationCatalystInteractEvent(), this);
 		
 		CrpMaterialRegistry.init();
 		PrintUtils.Print("&c[!] &e&lProject: Echoes of Lumina Enabled Successfully");

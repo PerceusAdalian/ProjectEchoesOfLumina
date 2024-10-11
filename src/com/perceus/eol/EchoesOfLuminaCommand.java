@@ -12,7 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.perceus.eol.branch.crp.material.CrpMaterialObject;
+import com.perceus.eol.branch.crp.material.AbstractCrpMaterialObject;
 import com.perceus.eol.branch.crp.material.CrpMaterialRegistry;
 import com.perceus.eol.branch.mobgeneration.CustomEolMob;
 import com.perceus.eol.utils.EnumOfEntities;
@@ -143,7 +143,7 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("adhere") && CrpMaterialRegistry.materialRegistry.containsKey(args[1])) 
 		{
-			CrpMaterialObject material = CrpMaterialRegistry.materialRegistry.get(args[1]);
+			AbstractCrpMaterialObject material = CrpMaterialRegistry.materialRegistry.get(args[1]);
 			ItemStack stack = material.generate();
 			player.getInventory().addItem(stack);
 			return true;
