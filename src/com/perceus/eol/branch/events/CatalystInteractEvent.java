@@ -14,9 +14,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
-import com.perceus.eol.branch.crp.material.AbstractCrpMaterialObject;
+import com.perceus.eol.branch.rel.material.AbstractRelMaterial;
 
-public class CreationCatalystInteractEvent implements Listener
+public class CatalystInteractEvent implements Listener
 {
 
 	static Map<Player, Object> timedPlayers = new WeakHashMap<>();
@@ -42,7 +42,7 @@ public class CreationCatalystInteractEvent implements Listener
 			return;
 		}
 		
-		if (!held.getItemMeta().getPersistentDataContainer().has(AbstractCrpMaterialObject.catalystKey)) 
+		if (!held.getItemMeta().getPersistentDataContainer().has(AbstractRelMaterial.catalystKey)) 
 		{
 			return;
 		}
@@ -60,5 +60,5 @@ public class CreationCatalystInteractEvent implements Listener
 		return;
 		
 	}
-	
+
 }

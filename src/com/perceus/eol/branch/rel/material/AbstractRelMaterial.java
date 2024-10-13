@@ -1,4 +1,4 @@
-package com.perceus.eol.branch.crp.material;
+package com.perceus.eol.branch.rel.material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
-import com.perceus.eol.branch.crp.enums.Rarity;
+import com.perceus.eol.branch.rel.enums.Rarity;
 import com.perceus.eol.utils.PrintUtils;
 
-public abstract class AbstractCrpMaterialObject
+public abstract class AbstractRelMaterial
 {
-	public static final NamespacedKey materialKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "crp_material");
+	public static final NamespacedKey materialKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "rel_material");
 	public static final NamespacedKey idKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "material_id");
 	public static final NamespacedKey rarityKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "rarity");
 	public static final NamespacedKey catalystKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "catalyst");
@@ -27,7 +27,7 @@ public abstract class AbstractCrpMaterialObject
 	private boolean enchantedEffect = false;
 	private boolean isCatalyst = false;
 	
-	public AbstractCrpMaterialObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
+	public AbstractRelMaterial(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
 	{
 		this.name = name;
 		this.internalName = internalName;
@@ -134,7 +134,7 @@ public abstract class AbstractCrpMaterialObject
 			meta.setEnchantmentGlintOverride(true);
 		}
 		
-		itemDescription.add(PrintUtils.ColorParser("&r&e&o&lCRP Material \n"));
+		itemDescription.add(PrintUtils.ColorParser("&r&e&o&lREL Material \n"));
 		itemDescription.add("\n");
 		itemDescription.add(PrintUtils.ColorParser("&r&f&nRarity&r&f: «&" + color) + rarityStars + PrintUtils.ColorParser("&r&f»") + "\n");
 		itemDescription.add("\n");
@@ -142,20 +142,29 @@ public abstract class AbstractCrpMaterialObject
 		if (this.isCatalyst()) 
 		{
 			meta.getPersistentDataContainer().set(catalystKey, PersistentDataType.BOOLEAN, isCatalyst());
-			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the CRP Menu. \n"));	
+			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the RELIVE Menu. \n"));	
 		}
 		else 
 		{
-			itemDescription.add(PrintUtils.ColorParser("&r&fUsed in the CRP Process. \n"));
+			itemDescription.add(PrintUtils.ColorParser("&r&fUsed in the RELIVE process. \n"));
 		}
 
 		itemDescription.add("\n");
 		
-		for (String line : description) 
+		if (this.isCatalyst()) 
 		{
-			itemDescription.add(PrintUtils.ColorParser("&r&7&o" + line) +"\n");			
+			for (String line : description) 
+			{
+				itemDescription.add(PrintUtils.ColorParser("&r&7&o" + line) +"\n");			
+			}			
 		}
-		
+		else 
+		{	
+			for (String line : description) 
+			{
+				itemDescription.add(PrintUtils.ColorParser("&r&" + color + "&o" + line) + "\n");			
+			}
+		}
 		
 		meta.setLore(itemDescription);
 		

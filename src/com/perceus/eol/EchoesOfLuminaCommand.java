@@ -12,9 +12,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.perceus.eol.branch.crp.material.AbstractCrpMaterialObject;
-import com.perceus.eol.branch.crp.material.CrpMaterialRegistry;
 import com.perceus.eol.branch.mobgeneration.CustomEolMob;
+import com.perceus.eol.branch.rel.material.AbstractRelMaterial;
+import com.perceus.eol.branch.rel.material.RelMaterialRegistry;
 import com.perceus.eol.utils.EnumOfEntities;
 import com.perceus.eol.utils.PrintUtils;
 
@@ -45,6 +45,41 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 		{
 			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Invalid Argument(s)"));
 			return false;
+		}
+		
+		if (args[0].equals("adhere")) 
+		{
+			
+			if (args[1].equals("catalyst") && RelMaterialRegistry.catalystRegistry.containsKey(args[2])) 
+			{				
+				AbstractRelMaterial material = RelMaterialRegistry.catalystRegistry.get(args[2]);
+				ItemStack stack = material.generate();
+				player.getInventory().addItem(stack);
+				return true;
+			}
+			
+			if (args[1].equals("materia") && RelMaterialRegistry.materiaRegistry.containsKey(args[2])) 
+			{
+				AbstractRelMaterial material = RelMaterialRegistry.materiaRegistry.get(args[2]);
+				ItemStack stack = material.generate();
+				player.getInventory().addItem(stack);
+				return true;
+			}
+			
+		}
+		
+		
+		if (args[0].equals("debug"))
+		{
+			if (ProjectEchoesOfLumina.debug == false) 
+			{
+				ProjectEchoesOfLumina.debug = true;
+				player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &a&lON"));
+				return true;
+			}
+			ProjectEchoesOfLumina.debug = false;
+			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &c&lOFF"));
+			return true;
 		}
 		
 		if (args[0].equals("generate") && args.length == 3) 
@@ -141,27 +176,6 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 			return true;
 		}
 		
-		if (args[0].equals("adhere") && CrpMaterialRegistry.materialRegistry.containsKey(args[1])) 
-		{
-			AbstractCrpMaterialObject material = CrpMaterialRegistry.materialRegistry.get(args[1]);
-			ItemStack stack = material.generate();
-			player.getInventory().addItem(stack);
-			return true;
-		}
-		
-		if (args[0].equals("debug"))
-		{
-			if (ProjectEchoesOfLumina.debug == false) 
-			{
-				ProjectEchoesOfLumina.debug = true;
-				player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &a&lON"));
-				return true;
-			}
-			ProjectEchoesOfLumina.debug = false;
-			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Debug console logging has been turned &c&lOFF"));
-			return true;
-		}
-		
 		else 
 		{
 			player.sendMessage(PrintUtils.ColorParser("&e[&c!&e] &7Invalid Argument(s)"));
@@ -169,6 +183,7 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 		
 		return false;
 	}
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) 
 	{
@@ -180,17 +195,23 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[0])
 				{
-					case "adhere" -> new ArrayList<>(CrpMaterialRegistry.materialRegistry.keySet());
+					case "adhere" -> List.of("catalyst", "materia");
 					case "debug" -> List.of();
 					case "generate" -> EnumOfEntities.asList();
 					default -> List.of();
 				};
 			}
-			
+			case 3 -> 
+			{
+				yield switch(args[1]) 
+				{
+					case "catalyst" -> new ArrayList<>(RelMaterialRegistry.catalystRegistry.keySet());
+					case "materia" -> new ArrayList<>(RelMaterialRegistry.materiaRegistry.keySet());
+					default -> List.of();
+				};
+			}
 			default -> List.of();
 		};
-
-				
-				//new ArrayList<>(CrpMaterials.materialRegistry.keySet());
 	}
+	
 }

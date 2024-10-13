@@ -1,10 +1,10 @@
-package com.perceus.eol.branch.material.creationcatalysts;
+package com.perceus.eol.branch.rel.material.creationcatalysts;
 
 import org.bukkit.Material;
 
-import com.perceus.eol.branch.crp.enums.Rarity;
+import com.perceus.eol.branch.rel.enums.Rarity;
 
-public class CreationCatalyst_1 extends AbstractCreationCatalystObject
+public class CreationCatalyst_1 extends AbstractCatalystObject
 {
 
 	public CreationCatalyst_1() 

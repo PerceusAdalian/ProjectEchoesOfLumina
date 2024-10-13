@@ -1,25 +1,25 @@
-package com.perceus.eol.branch.material.creationcatalysts;
+package com.perceus.eol.branch.rel.material.creationcatalysts;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
-import com.perceus.eol.branch.crp.enums.Rarity;
-import com.perceus.eol.branch.crp.material.AbstractCrpMaterialObject;
+import com.perceus.eol.branch.rel.enums.Rarity;
+import com.perceus.eol.branch.rel.material.AbstractRelMaterial;
 
-public abstract class AbstractCreationCatalystObject extends AbstractCrpMaterialObject implements Listener
+public abstract class AbstractCatalystObject extends AbstractRelMaterial implements Listener
 {
 	
 	private boolean isCatalyst;
 	
-	public AbstractCreationCatalystObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
+	public AbstractCatalystObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
 	{
 		super(name, internalName, material, rarity, enchantedEffect, description);
 		Bukkit.getPluginManager().registerEvents(this, ProjectEchoesOfLumina.instance);
 	}
 
-	public AbstractCreationCatalystObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, boolean isCatalyst, String...description) 
+	public AbstractCatalystObject(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, boolean isCatalyst, String...description) 
 	{
 		super(name, internalName, material, rarity, enchantedEffect, description);
 		this.isCatalyst = isCatalyst;

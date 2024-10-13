@@ -1,4 +1,4 @@
-package com.perceus.eol.branch.crp.enums;
+package com.perceus.eol.branch.rel.enums;
 
 public enum CrpModifierType
 {
