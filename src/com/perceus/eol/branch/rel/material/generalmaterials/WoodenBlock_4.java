@@ -10,11 +10,10 @@ public class WoodenBlock_4 extends AbstractRelMaterial
 
 	public WoodenBlock_4() 
 	{
-		super("Wooden Block IV", "wooden_block_4", Material.OAK_BUTTON, Rarity.FOUR, false, 
-				"The father now lying in agony, and a shockwave in the distance,",
-				"the first to execute the RELIVE protocol.",
-				"The boy, flowing with energy, calls forth &r&l&o&fHOLY&r&o&d energy.",
-				"The goblin, father, and mother dead, the boy cries out.");
+		super("Wooden Block", "wooden_block_4", Material.OAK_BUTTON, Rarity.FOUR, true, 
+				"The father now lies in agony, reunited with his son.", 
+				"The boy surged with rage, unknowingly activating the REL Protocol.",
+				"Losing control, he unleashed an Ash of Twilight, destroying all nearby life.");
 	}
 
 }

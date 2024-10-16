@@ -66,6 +66,14 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
+			if (args[1].equals("unrefinedmaterial") && RelMaterialRegistry.unrefinedMaterialRegistry.containsKey(args[2])) 
+			{
+				AbstractRelMaterial material = RelMaterialRegistry.unrefinedMaterialRegistry.get(args[2]);
+				ItemStack stack = material.generate();
+				player.getInventory().addItem(stack);
+				return true;
+			}
+			
 		}
 		
 		
@@ -195,7 +203,7 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[0])
 				{
-					case "adhere" -> List.of("catalyst", "materia");
+					case "adhere" -> List.of("catalyst", "materia", "unrefinedmaterial");
 					case "debug" -> List.of();
 					case "generate" -> EnumOfEntities.asList();
 					default -> List.of();
@@ -207,6 +215,7 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 				{
 					case "catalyst" -> new ArrayList<>(RelMaterialRegistry.catalystRegistry.keySet());
 					case "materia" -> new ArrayList<>(RelMaterialRegistry.materiaRegistry.keySet());
+					case "unrefinedmaterial" -> new ArrayList<>(RelMaterialRegistry.unrefinedMaterialRegistry.keySet());
 					default -> List.of();
 				};
 			}

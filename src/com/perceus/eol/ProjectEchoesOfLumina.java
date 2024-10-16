@@ -35,6 +35,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
 		
 		RelMaterialRegistry.catalystInit();
 		RelMaterialRegistry.materiaInit();
+		RelMaterialRegistry.unrefinedMaterialsInit();
 		PrintUtils.Print("&c[!] &e&lProject: Echoes of Lumina Enabled Successfully");
 //		Bukkit.getPluginManager().registerEvents(new NaturalDamageToEntityEvent(), this);
 //		this.getCommand("test").setExecutor(new EolCommand());
@@ -52,9 +53,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
  * 		CRP (Creation Recollection Precept) -> REL (Resonance Echoic Liberation) | RELIVE (Resonance Echoic Liberation Integral Vivification Experience)
  *		-Current Tasks:
  *			1) Work on CRP materials; you p much have all the other shit ironed out! :D
- *			2) Make a command that can build an EOL mob; hailey's hint:
- *		-So, mob spawning is something that the `World` does. You can get the overworld with `Bukkit.getWorld("world")`. 
- *		-If you remember how to spawn projectiles, it's pretty similar. Poke around when you get a world instance.
+ *			2) 
  *			3) 
  *			4) 
  *			5) 

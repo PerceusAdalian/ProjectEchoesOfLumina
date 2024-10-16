@@ -19,6 +19,8 @@ public abstract class AbstractRelMaterial
 	public static final NamespacedKey idKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "material_id");
 	public static final NamespacedKey rarityKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "rarity");
 	public static final NamespacedKey catalystKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "catalyst");
+	public static final NamespacedKey unrefinedMaterialKey = new NamespacedKey(ProjectEchoesOfLumina.instance, "unrefined_rel_material");
+	
 	private String name;
 	private String internalName;
 	private String[] description;
@@ -26,6 +28,7 @@ public abstract class AbstractRelMaterial
 	private Rarity rarity;
 	private boolean enchantedEffect = false;
 	private boolean isCatalyst = false;
+	private boolean isUnrefined = false;
 	
 	public AbstractRelMaterial(String name, String internalName, Material material, Rarity rarity, boolean enchantedEffect, String...description) 
 	{
@@ -102,68 +105,118 @@ public abstract class AbstractRelMaterial
 		this.isCatalyst = isCatalyst;
 	}
 
+	public boolean isUnrefined() 
+	{
+		return isUnrefined;
+	}
+	
+	public void setUnrefined(boolean isUnrefined) 
+	{
+		this.isUnrefined = isUnrefined;
+	}
+	
 	public void setEnchantedEffect(boolean enchantedEffect) 
 	{
 		this.enchantedEffect = enchantedEffect;
 	}
 
+	private String rarityStars;
+	
 	public ItemStack generate() 
 	{
-		String rarityStars = "♦".repeat(rarity.getRarity());
+		if (rarity.getRarity() == 0) 
+		{
+			rarityStars = "?";
+		}
+		else 
+		{
+			
+			rarityStars = "♦".repeat(rarity.getRarity());
+		}
+		
 		ItemStack stack = new ItemStack(material, 1);
 		ItemMeta meta = stack.getItemMeta();
 		List<String> itemDescription = new ArrayList<>();
-		meta.setDisplayName(PrintUtils.ColorParser("&r&f") + name);
-		meta.getPersistentDataContainer().set(materialKey, PersistentDataType.STRING, materialKey.toString());
-		meta.getPersistentDataContainer().set(idKey, PersistentDataType.STRING, internalName.toString());
-		meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.INTEGER, rarity.getRarity());
 		
 		char color = switch (rarity) 
 		{
+			case NONE -> color = 'k';
 			case ONE -> color = '7';
-			case TWO -> color = '9';
+			case TWO -> color = '6';
 			case THREE -> color = 'b';
 			case FOUR -> color = 'd';
 			case FIVE -> color = 'e';
 			case SIX -> color = 'c';
 			case SEVEN -> color = '3';	
 		};
+
+		String tier = switch(rarity) 
+		{
+			case NONE -> tier = "?";
+			case ONE -> tier = "I";
+			case TWO -> tier = "II";
+			case THREE -> tier = "III";
+			case FOUR -> tier = "IV";
+			case FIVE -> tier = "V";
+			case SIX -> tier = "VI";
+			case SEVEN -> tier = "VII";	
+		};
+		
+		if (this.isUnrefined() == true)
+		{
+			meta.setDisplayName(PrintUtils.ColorParser("&r&f" + name));
+		}
+		else 
+		{	
+			meta.setDisplayName(PrintUtils.ColorParser("&r&f" + name + " &" + color + tier));			
+		}
+		
+		meta.getPersistentDataContainer().set(materialKey, PersistentDataType.STRING, materialKey.toString());
+		meta.getPersistentDataContainer().set(idKey, PersistentDataType.STRING, internalName.toString());
+		meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.INTEGER, rarity.getRarity());
+		
 		
 		if (this.isEnchantedEffect() == true) 
 		{
 			meta.setEnchantmentGlintOverride(true);
 		}
+		if (this.isUnrefined() == true) 
+		{
+			itemDescription.add(PrintUtils.ColorParser("&r&f&o&lUnrefined REL Material&r&f\n"));
+		}
+		else
+		{	
+			itemDescription.add(PrintUtils.ColorParser("&r&f-+-{ &e&o&lREL Object &r&f}-+-\n"));			
+		}
 		
-		itemDescription.add(PrintUtils.ColorParser("&r&e&o&lREL Material \n"));
 		itemDescription.add("\n");
 		itemDescription.add(PrintUtils.ColorParser("&r&f&nRarity&r&f: «&" + color) + rarityStars + PrintUtils.ColorParser("&r&f»") + "\n");
 		itemDescription.add("\n");
 		itemDescription.add(PrintUtils.ColorParser("&r&f&nUsage&r&f: \n"));
+		
 		if (this.isCatalyst()) 
 		{
-			meta.getPersistentDataContainer().set(catalystKey, PersistentDataType.BOOLEAN, isCatalyst());
-			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Creation Catalysts to open the RELIVE Menu. \n"));	
+			meta.getPersistentDataContainer().set(catalystKey, PersistentDataType.STRING, getInternalName());
+			itemDescription.add("\n");
+			itemDescription.add(PrintUtils.ColorParser("&r&f&lRight-Click&r&f Catalysts to access the REL Protocol.\n"));	
 		}
-		else 
+		if (this.isUnrefined() == true) 
 		{
-			itemDescription.add(PrintUtils.ColorParser("&r&fUsed in the RELIVE process. \n"));
+			meta.getPersistentDataContainer().set(unrefinedMaterialKey, PersistentDataType.STRING, getInternalName());
+			itemDescription.add("\n");
+			itemDescription.add(PrintUtils.ColorParser("&r&fThis material can be &nRefined&r&f for further use."));	
+		}
+		if (!this.isCatalyst() && !this.isUnrefined()) 
+		{
+			itemDescription.add("\n");
+			itemDescription.add(PrintUtils.ColorParser("&r&fA component used in the REL Protocol.\n"));	
 		}
 
 		itemDescription.add("\n");
 		
-		if (this.isCatalyst()) 
+		for (String line : description) 
 		{
-			for (String line : description) 
-			{
-				itemDescription.add(PrintUtils.ColorParser("&r&7&o" + line) +"\n");			
-			}			
-		}
-		else 
-		{	
-			for (String line : description) 
-			{
-				itemDescription.add(PrintUtils.ColorParser("&r&" + color + "&o" + line) + "\n");			
-			}
+			itemDescription.add(PrintUtils.ColorParser("&r&7&o" + line) +"\n");			
 		}
 		
 		meta.setLore(itemDescription);

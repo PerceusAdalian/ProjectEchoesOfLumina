@@ -13,6 +13,7 @@ import com.perceus.eol.branch.rel.material.generalmaterials.WoodenBlock_2;
 import com.perceus.eol.branch.rel.material.generalmaterials.WoodenBlock_3;
 import com.perceus.eol.branch.rel.material.generalmaterials.WoodenBlock_4;
 import com.perceus.eol.branch.rel.material.generalmaterials.WoodenBlock_5;
+import com.perceus.eol.branch.rel.material.unrefined.UnrefinedWoodenBlock;
 
 public class RelMaterialRegistry
 {	
@@ -35,19 +36,25 @@ public class RelMaterialRegistry
 	public static Map<String, AbstractRelMaterial> materiaRegistry = new HashMap<>();
 	public static void materiaInit() 
 	{
+		//Wooden Materia
 		WoodenBlock_1 woodenBlock1 = new WoodenBlock_1();
 		materiaRegistry.put(woodenBlock1.getInternalName(), woodenBlock1);
-		
 		WoodenBlock_2 woodenBlock2 = new WoodenBlock_2();
 		materiaRegistry.put(woodenBlock2.getInternalName(), woodenBlock2);
-		
 		WoodenBlock_3 woodenBlock3 = new WoodenBlock_3();
 		materiaRegistry.put(woodenBlock3.getInternalName(), woodenBlock3);
-		
 		WoodenBlock_4 woodenBlock4 = new WoodenBlock_4();
 		materiaRegistry.put(woodenBlock4.getInternalName(), woodenBlock4);
-		
 		WoodenBlock_5 woodenBlock5 = new WoodenBlock_5();
 		materiaRegistry.put(woodenBlock5.getInternalName(), woodenBlock5);
+		
+		
+	}
+	
+	public static Map<String, AbstractRelMaterial> unrefinedMaterialRegistry = new HashMap<>();
+	public static void unrefinedMaterialsInit() 
+	{
+		UnrefinedWoodenBlock woodenChunk1 = new UnrefinedWoodenBlock();
+		unrefinedMaterialRegistry.put(woodenChunk1.getInternalName(), woodenChunk1);
 	}
 }

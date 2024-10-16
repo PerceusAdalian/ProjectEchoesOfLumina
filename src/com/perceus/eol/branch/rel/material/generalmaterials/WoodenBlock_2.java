@@ -10,8 +10,8 @@ public class WoodenBlock_2 extends AbstractRelMaterial
 
 	public WoodenBlock_2() 
 	{
-		super("Wooden Block II", "wooden_block_2", Material.OAK_BUTTON, Rarity.TWO, false, 
-				"They came in waves, unrelenting. Even training swords had their use.");
+		super("Wooden Block", "wooden_block_2", Material.OAK_BUTTON, Rarity.TWO, true, 
+				"At first there were few. Then, they came in waves, unrelenting.", "Even Her Majesty struggled in battle..");
 	}
 
 }

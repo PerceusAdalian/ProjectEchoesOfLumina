@@ -2,6 +2,7 @@ package com.perceus.eol.branch.rel.enums;
 
 public enum Rarity
 {
+	NONE(0),
 	ONE(1),
 	TWO(2),
 	THREE(3),

@@ -10,10 +10,10 @@ public class WoodenBlock_5 extends AbstractRelMaterial
 
 	public WoodenBlock_5() 
 	{
-		super("Wooden Block V", "wooden_block_5", Material.OAK_BUTTON, Rarity.FIVE, false, 
-				"The boy trained for a year, now a man.",
-				"He must face his anger and sadness..",
-				"and prepare for the war without, and for the war within.");
+		super("Wooden Block", "wooden_block_5", Material.OAK_BUTTON, Rarity.FIVE, true, 
+				"Several years later, now a man, he faced his loss.",
+				"The first to overclock due to the REL phenomena,",
+				"he prepared for the battles ahead, and for the war within.");
 	}
 
 }
