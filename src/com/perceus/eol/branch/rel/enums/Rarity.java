@@ -9,8 +9,7 @@ public enum Rarity
 	FOUR(4),
 	FIVE(5),
 	SIX(6),
-	SEVEN(7),
-	;
+	SEVEN(7);
 	
 	private final int rarity;
 	

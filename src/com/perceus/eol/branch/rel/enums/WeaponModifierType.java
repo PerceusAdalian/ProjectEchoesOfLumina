@@ -1,6 +1,6 @@
 package com.perceus.eol.branch.rel.enums;
 
-public enum CrpModifierType
+public enum WeaponModifierType
 {
 	BASE_ATTACK,
 	ATTACK_RATE,

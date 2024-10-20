@@ -175,7 +175,6 @@ public abstract class AbstractRelMaterial
 		meta.getPersistentDataContainer().set(idKey, PersistentDataType.STRING, internalName.toString());
 		meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.INTEGER, rarity.getRarity());
 		
-		
 		if (this.isEnchantedEffect() == true) 
 		{
 			meta.setEnchantmentGlintOverride(true);

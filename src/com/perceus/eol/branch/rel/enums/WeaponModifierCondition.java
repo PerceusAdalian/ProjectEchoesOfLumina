@@ -1,6 +1,6 @@
 package com.perceus.eol.branch.rel.enums;
 
-public enum CrpModifierCondition
+public enum WeaponModifierCondition
 {
 	//generic conditions
 	PVE,

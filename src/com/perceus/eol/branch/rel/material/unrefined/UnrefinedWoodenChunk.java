@@ -4,9 +4,9 @@ import org.bukkit.Material;
 
 import com.perceus.eol.branch.rel.enums.Rarity;
 
-public class UnrefinedWoodenBlock extends AbstractUnrefinedRelMaterial
+public class UnrefinedWoodenChunk extends AbstractUnrefinedRelMaterial
 {
-	public UnrefinedWoodenBlock() 
+	public UnrefinedWoodenChunk() 
 	{
 		super("Unrefined Wooden Block", "unrefined_wooden_block", Material.OAK_BUTTON, Rarity.NONE, false, true);
 	}
