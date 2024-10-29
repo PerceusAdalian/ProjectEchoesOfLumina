@@ -64,4 +64,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
  *
  */
 
-
+/*
+ * Commonly Used Commands:
+ * /kill @e[type=! player]
+ */
