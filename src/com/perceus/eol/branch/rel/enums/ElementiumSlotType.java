@@ -2,31 +2,25 @@ package com.perceus.eol.branch.rel.enums;
 
 public enum ElementiumSlotType
 {
-	NO_SLOT("No Slot", true),
-	GLACIO("Glacio", true),
-	INFERNO("Inferno", true),
-	GEO("Geo", true),
-	AERO("Aero", true),
-	MODULO("Modulo", true),
-	CELESTIO("Celestio", true),
-	MORTIO("Mortio", true),
-	COSMO("Cosmo", true);
+	NO_SLOT("No Slot"),
+	MODULO("Modulo"),
+	GLACIO("Glacio"),
+	INFERNO("Inferno"),
+	GEO("Geo"),
+	AERO("Aero"),
+	CELESTIO("Celestio"),
+	MORTIO("Mortio"),
+	COSMO("Cosmo");
 
-	private final String element;
-	private final boolean isElement;
+	private final String element;	
 	
-	private ElementiumSlotType(String element, boolean isElement) 
+	ElementiumSlotType(String element) 
 	{
 		this.element = element;
-		this.isElement = isElement;
 	}
 
-	public String getElement() {
-		return element;
-	}
-
-	public boolean isElement() 
+	public String getElement() 
 	{
-		return isElement;
+		return element;
 	}
 }

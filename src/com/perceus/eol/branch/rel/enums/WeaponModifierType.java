@@ -2,7 +2,7 @@ package com.perceus.eol.branch.rel.enums;
 
 public enum WeaponModifierType
 {
-	BASE_ATTACK,
+	BASE_ATTACK(),
 	ATTACK_RATE,
 	PERCENT_CRITICAL,
 	CRITICAL_MODIFIER,

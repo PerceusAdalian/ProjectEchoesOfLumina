@@ -4,6 +4,7 @@ public enum DamageType
 {
 	//Base Types
 	GENERIC(1.0,1.0,1.0,1.0),
+	
 	BLUNT(1.0,0.5,1.5,0.0),
 	SLICE(1.0,0.5,1.5,0.0),
 	PIERCE(1.0,0.5,1.5,0.0),
@@ -40,7 +41,12 @@ public enum DamageType
 		this.weaknessMultiplier = weaknessMultiplier;
 		this.immuneMultiplier = immuneMultiplier;
 	}
-
+	
+//	public DamageType getDamageType() 
+//	{
+//		return this;
+//	}
+	
 	public double getBaseMultiplier() 
 	{
 		return baseMultiplier;
