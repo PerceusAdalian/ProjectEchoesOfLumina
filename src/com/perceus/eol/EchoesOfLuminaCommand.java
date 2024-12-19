@@ -28,12 +28,12 @@ public class EchoesOfLuminaCommand implements CommandExecutor, TabCompleter
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) 
 	{
-		Player player = (Player) sender;
 
 		if (!(sender instanceof Player)) 
 		{
 			return false;
 		}
+		Player player = (Player) sender;
 		
 		if (!sender.isOp()) 
 		{
