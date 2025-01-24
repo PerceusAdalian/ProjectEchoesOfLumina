@@ -37,6 +37,7 @@ public class ProjectEchoesOfLumina extends JavaPlugin
 		RelMaterialRegistry.materiaInit();
 		RelMaterialRegistry.unrefinedMaterialsInit();
 		PrintUtils.Print("&c[!] &e&lProject: Echoes of Lumina Enabled Successfully");
+		
 //		Bukkit.getPluginManager().registerEvents(new NaturalDamageToEntityEvent(), this);
 //		this.getCommand("test").setExecutor(new EolCommand());
 	}
