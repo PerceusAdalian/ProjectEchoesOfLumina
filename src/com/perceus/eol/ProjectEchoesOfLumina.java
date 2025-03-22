@@ -54,11 +54,8 @@ public class ProjectEchoesOfLumina extends JavaPlugin
  * 		CRP (Creation Recollection Precept) -> REL (Resonance Echoic Liberation) | RELIVE (Resonance Echoic Liberation Integral Vivification Experience)
  *		-Current Tasks:
  *			1) Work on CRP materials; you p much have all the other shit ironed out! :D
- *			2) 
+ *			2) Write a map by which the materials are dropped via LootGenerateEvent and EntityDeathEvent
  *			3) 
- *			4) 
- *			5) 
- *			6) Write a map by which the materials are dropped via LootGenerateEvent and EntityDeathEvent
  *
  * if (ProjectEchoesOfLumina.debug == true){}
  *

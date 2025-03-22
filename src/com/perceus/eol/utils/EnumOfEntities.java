@@ -13,8 +13,13 @@ public class EnumOfEntities
 		List<String> entityNames = new ArrayList<>(); // Start with an empty list
 		for (EntityType type : EntityType.values()) // Iterate over all the enum variants
 		{
-		  entityNames.add(type.name()); // Get the variant's name and then add it to the list
+			entityNames.add(type.name()); // Get the variant's name and then add it to the list
+//			if (!entityNames.contains(Mob.class.getEnumConstants().getClass().getName())) 
+//			{
+//				entityNames.remove(type.name());
+//			}
 		}
+		
 		return entityNames;	
 	}
 	

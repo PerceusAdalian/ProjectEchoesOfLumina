@@ -26,12 +26,9 @@ public abstract class AbstractCatalystObject extends AbstractRelMaterial impleme
 		Bukkit.getPluginManager().registerEvents(this, ProjectEchoesOfLumina.instance);
 	}
 	
-	public boolean isCatalyst() {
+	public boolean isCatalyst() 
+	{
 		return isCatalyst;
-	}
-	
-	public void setCatalyst(boolean isCatalyst) {
-		this.isCatalyst = isCatalyst;
 	}
 
 }
