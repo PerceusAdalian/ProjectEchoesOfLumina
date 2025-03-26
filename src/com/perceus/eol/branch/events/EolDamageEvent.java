@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import com.perceus.eol.ProjectEchoesOfLumina;
 import com.perceus.eol.branch.combat.CombatEffects;
@@ -25,7 +26,7 @@ public class EolDamageEvent implements Listener
 	public static Map<UUID, AdvancedTimerRunnable> mapOfTimers = new HashMap<>();
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onHit(EntityDamageByEntityEvent event) 
+	public void onHit(EntityDamageEvent event) 
 	{
 		//checks for the entity's PDC; if they are not an EOL mob, return
 		if (!(event.getEntity().getPersistentDataContainer().has(MobGenerateEvent.mobKey))) 
@@ -33,9 +34,6 @@ public class EolDamageEvent implements Listener
 			return;
 		}
 		
-		//Restores mob health to original max; nullifying the minecraft damage.
-		((Damageable) event.getEntity()).setHealth(((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-
 		//runs a preliminary check for if the mob was already guard broken before this damage calculation. If so, then we deal an additional 10% damage relative to their max health.
 		if (ArbitraryHealthContainer.isBroken(event.getEntity())) 
 		{
@@ -45,6 +43,9 @@ public class EolDamageEvent implements Listener
 		//run damage calculations
 		ArbitraryHealthContainer.damage(event.getEntity(), event.getDamage());
 		ArbitraryHealthContainer.damageArmor(event.getEntity(), event.getDamage()*0.5d);
+		
+		//Restores mob health to original max; nullifying the minecraft damage.
+		((Damageable) event.getEntity()).setHealth(((Attributable) event.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 		
 		//check for guard breaks
 		if (ArbitraryHealthContainer.isBroken(event.getEntity()))
@@ -59,21 +60,26 @@ public class EolDamageEvent implements Listener
 		}
 		
 		//if the damager was a player, update the hud so that it shows the health and stats of the mob(s) hit
-		if (event.getDamager() instanceof Player)
+		if (event instanceof EntityDamageByEntityEvent) 
 		{
-			HealthBar.updateBossBar(event.getEntity(), true); 
-			if (!mapOfTimers.containsKey(event.getEntity().getUniqueId())) 
+			EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
+			
+			if (damageEvent.getDamager() instanceof Player)
 			{
-				mapOfTimers.put(event.getEntity().getUniqueId(), new AdvancedTimerRunnable(() -> 
+				HealthBar.updateBossBar(event.getEntity(), true); 
+				if (!mapOfTimers.containsKey(event.getEntity().getUniqueId())) 
 				{
-					HealthBar.hideBossBar(event.getEntity());
-					mapOfTimers.remove(event.getEntity().getUniqueId());
-				}, 100));			
+					mapOfTimers.put(event.getEntity().getUniqueId(), new AdvancedTimerRunnable(() -> 
+					{
+						HealthBar.hideBossBar(event.getEntity());
+						mapOfTimers.remove(event.getEntity().getUniqueId());
+					}, 100));			
+				}
+				
+				mapOfTimers.get(event.getEntity().getUniqueId()).reset();
 			}
 			
-			mapOfTimers.get(event.getEntity().getUniqueId()).reset();
 		}
-		
 		//run debug code (if applicable)
 		if (ProjectEchoesOfLumina.debug == true) 
 		{
